@@ -1,0 +1,12 @@
+C:\Users\oga\source\repos\CRUD_Sample1\SQLserver01\bin\Debug\SQLserver01.exe.config
+C:\Users\oga\source\repos\CRUD_Sample1\SQLserver01\bin\Debug\SQLserver01.exe
+C:\Users\oga\source\repos\CRUD_Sample1\SQLserver01\bin\Debug\SQLserver01.pdb
+C:\Users\oga\source\repos\CRUD_Sample1\SQLserver01\obj\Debug\SQLserver01.csproj.AssemblyReference.cache
+C:\Users\oga\source\repos\CRUD_Sample1\SQLserver01\obj\Debug\SQLserver01.csproj.SuggestedBindingRedirects.cache
+C:\Users\oga\source\repos\CRUD_Sample1\SQLserver01\obj\Debug\SQLserver01.FrmMain.resources
+C:\Users\oga\source\repos\CRUD_Sample1\SQLserver01\obj\Debug\SQLserver01.Properties.Resources.resources
+C:\Users\oga\source\repos\CRUD_Sample1\SQLserver01\obj\Debug\SQLserver01.csproj.GenerateResource.cache
+C:\Users\oga\source\repos\CRUD_Sample1\SQLserver01\obj\Debug\SQLserver01.csproj.CoreCompileInputs.cache
+C:\Users\oga\source\repos\CRUD_Sample1\SQLserver01\obj\Debug\SQLserver01.exe
+C:\Users\oga\source\repos\CRUD_Sample1\SQLserver01\obj\Debug\SQLserver01.pdb
+C:\Users\oga\source\repos\CRUD_Sample1\SQLserver01\obj\Debug\SQLserver01.FrmVipMembers.resources
