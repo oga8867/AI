@@ -12,7 +12,6 @@ import numpy as np
 import pandas as pd
 import io
 import os
-from riffusion.streamlit import playground
 
 os.makedirs('./news', exist_ok=True)
 os.makedirs('./wordcloud', exist_ok=True)
