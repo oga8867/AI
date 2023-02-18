@@ -112,11 +112,11 @@ from rankshoot import rankshoots
 #starcraft_model()  #위에 리니어모델 실행
 #model_from_joblib = joblib.load('./starcraft.pkl')  #리니어모델 불러오기
 #print(model_from_joblib.predict(x_test)) 모델 불러와서 예측
-model_from_joblib = pickle.load(open('./starcraft.pkl','rb'))
+model_from_joblib = pickle.load(open('starcraft.pkl','rb'))
 
 #logistic_model()  #위에 로지스틱모델 실행
 #Logimodel_from_joblib = joblib.load('./starcraft_logistic.pkl')  #로지스틱모델 불러오기
-Logimodel_from_joblib = pickle.load(open('./starcraft_logistic.pkl','rb'))
+Logimodel_from_joblib = pickle.load(open('starcraft_logistic.pkl','rb'))
 
 def linear_streamlit():
     age = float(st.number_input('pick your age', 0, 99))
