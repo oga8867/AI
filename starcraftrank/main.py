@@ -125,7 +125,7 @@ def linear_streamlit():
     weekPT=float(st.number_input('playtime of this week', 0, 168))
     selectkey= float(st.number_input('how many use selectkey(단축키) of this game?', 0, 10000)/88.5)
     AL=float(st.number_input('your actionlatency(ms)', 0, 1000000))
-    enterBT = st.button('Click me')
+    enterBT = st.button('Scan!')
     if enterBT:
         x = pd.DataFrame([["Age", "HoursPerWeek", "TotalHours", "APM","SelectByHotkeys","ActionLatency"]])
         x.loc[0] = [age,apm,wholePT,weekPT,selectkey,AL]
@@ -171,7 +171,7 @@ def logistic_streamlit():
     weekPT = float(st.number_input('playtime of this week', 0, 168))
     selectkey = float(st.number_input('how many use selectkey(단축키) of this game?', 0, 10000) / 88.5)
     AL = float(st.number_input('your actionlatency(ms)', 0, 1000000))
-    enterBT = st.button('Click me')
+    enterBT = st.button('Oracle! predict my rank!')
     if enterBT:
         x = pd.DataFrame([["Age", "HoursPerWeek", "TotalHours", "APM", "SelectByHotkeys", "ActionLatency"]])
         x.loc[0] = [age, apm, wholePT, weekPT, selectkey, AL]
