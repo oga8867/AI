@@ -137,28 +137,28 @@ def linear_streamlit():
             if predict <= 0:
                 images = ''
             elif predict == 1:
-                images = './images/bronze.png'
+                images = '/app/ai/starcraftrank/images/bronze.png'
                 st.image(f'{images}')
             elif predict == 2:
-                images = './images/silver.png'
+                images = '/app/ai/starcraftrank/images/silver.png'
                 st.image(f'{images}')
             elif predict == 3:
-                images = './images/gold.png'
+                images = '/app/ai/starcraftrank/images/gold.png'
                 st.image(f'{images}')
             elif predict == 4:
-                images = './images/platinum.png'
+                images = '/app/ai/starcraftrank/images/platinum.png'
                 st.image(f'{images}')
             elif predict == 5:
-                images = './images/diamond.png'
+                images = '/app/ai/starcraftrank/images/diamond.png'
                 st.image(f'{images}')
             elif predict == 6:
-                images = './images/master.png'
+                images = '/app/ai/starcraftrank/images/master.png'
                 st.image(f'{images}')
             elif predict == 7:
-                images = './images/GM.png'
+                images = '/app/ai/starcraftrank/images/GM.png'
                 st.image(f'{images}')
             elif predict >= 8:
-                images = './images/progamer.png'
+                images = '/app/ai/starcraftrank/images/progamer.png'
                 st.image(f'{images}')
             else:
                 st.write('무언가 오류가있습니다.')
@@ -183,28 +183,28 @@ def logistic_streamlit():
             if predict <= 0:
                 images = ''
             elif predict == 1:
-                images = './images/bronze.png'
+                images = '/app/ai/starcraftrank/images/bronze.png'
                 st.image(f'{images}')
             elif predict == 2:
-                images = './images/silver.png'
+                images = '/app/ai/starcraftrank/images/silver.png'
                 st.image(f'{images}')
             elif predict == 3:
-                images = './images/gold.png'
+                images = '/app/ai/starcraftrank/images/gold.png'
                 st.image(f'{images}')
             elif predict == 4:
-                images = './images/platinum.png'
+                images = '/app/ai/starcraftrank/images/platinum.png'
                 st.image(f'{images}')
             elif predict == 5:
-                images = './images/diamond.png'
+                images = '/app/ai/starcraftrank/images/diamond.png'
                 st.image(f'{images}')
             elif predict == 6:
-                images = './images/master.png'
+                images = '/app/ai/starcraftrank/images/master.png'
                 st.image(f'{images}')
             elif predict == 7:
-                images = './images/GM.png'
+                images = '/app/ai/starcraftrank/images/GM.png'
                 st.image(f'{images}')
             elif predict >= 8:
-                images = './images/progamer.png'
+                images = '/app/ai/starcraftrank/images/progamer.png'
                 st.image(f'{images}')
             else:
                 st.write('무언가 오류가있습니다.')
