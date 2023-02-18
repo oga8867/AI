@@ -3,7 +3,7 @@ import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt                          ## plot 그릴때 사용
 
-
+import pickle
 
 from sklearn import datasets                             ## iris와 같은 내장 데이터 사용
 from sklearn.model_selection import train_test_split     ## train, test 데이터 분할
