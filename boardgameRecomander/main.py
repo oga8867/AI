@@ -1,6 +1,6 @@
 import pandas as pd
 import streamlit as st
-a = pd.read_csv('./bgg_db_1806.csv')
+a = pd.read_csv('/app/ai/boardgameRecomander/bgg_db_1806.csv')
 
 #print(pd.DataFrame(a))
 
