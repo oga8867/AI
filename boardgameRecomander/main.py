@@ -20,8 +20,8 @@ if search:
     if playtime != 0:
         b = b[b['avg_time']<=int(playtime+30)]
         b = b[b['avg_time'] >= int(playtime-30)]
-    # if classic:
-    #     b = b[b['year']<=2000]
+    if classic:
+        b = b[b['year']<=2000]
     b = b[b['weight']<=weight_high]
     b = b[b['weight']>=weight_low]
     b = b[0:3]
