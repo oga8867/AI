@@ -27,12 +27,15 @@ if search:
     b = b[0:3]
     name = b.values.tolist()
     if len(name)==0:
-        st.write('이런... 조건에 맞는 게임은 없군요. 까다로우시네요, 대신 가장 비슷한 게임을 찾아드렸습니다.')
+        st.write('이런... 조건에 맞는 게임은 없군요. 까다로우시네요, 대신 가장 비슷한 게임을 찾아드리겠습니다.')
         b = a[a['min_players'] <=Players] #playerNumber_min]
         b = b[b['max_players'] >=Players] #playerNumber_max]
+        b = b[0:3]
+        name = b.values.tolist()
         # if classic:
         #     b = b[b['year'] <= 2000]
-
+    if len(name)==0:
+        st.write('음... 그래도 게임이 없네요. 혹시 12명이서 600시간동안 게임을 하시려는건 아니겠죠?')
     st.write(f'당신의 추천게임은 {name[0][2]}입니다!')
 
     st.write(f'자세한 정보는 이곳을 참고하세요. -> {name[0][1]}')
