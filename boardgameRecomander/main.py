@@ -27,6 +27,7 @@ if search:
     b = b[0:3]
     name = b.values.tolist()
     if len(name)==0:
+        st.write('이런... 조건에 맞는 게임은 없군요. 까다로우시네요, 대신 가장 비슷한 게임을 찾아드렸습니다.')
         b = a[a['min_players'] <=Players] #playerNumber_min]
         b = b[b['max_players'] >=Players] #playerNumber_max]
         # if classic:
