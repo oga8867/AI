@@ -45,4 +45,12 @@ if search:
         st.write(f'{name[1][2]} -> {name[1][1]}')
         st.write(f'{name[2][2]} -> {name[2][1]}')
     else:
-        st.write(f'이런...추가적인 게임정보가 없네요')
+        st.write(f'이런...추가적인 게임정보가 없네요. 조건에 맞진 않지만 이런건 어떤가요?')
+        b = a[a['min_players'] <=Players] #playerNumber_min]
+        b = b[b['max_players'] >=Players] #playerNumber_max]
+        b = b[0:3]
+        name = b.values.tolist()
+        st.write(f'조건에 맞진 않지만 추천 게임으로는 {name[1][2]}, {name[2][2]}가 있습니다.')
+        st.write(f'이 게임들이 궁금하시다면 각각의 주소를 참고하세요.')
+        st.write(f'{name[1][2]} -> {name[1][1]}')
+        st.write(f'{name[2][2]} -> {name[2][1]}')
