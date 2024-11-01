@@ -19,6 +19,22 @@ from sklearn.preprocessing import StandardScaler
 import streamlit as st
 import joblib
 from rankshoot import rankshoots
+
+import requests
+from io import BytesIO
+
+# GitHub raw URL
+url = 'https://raw.githubusercontent.com/oga8867/AI/main/starcraftrank/starcraft.pkl'
+
+# 파일 다운로드
+response = requests.get(url)
+response.raise_for_status()  # 오류가 있을 경우 예외 발생
+
+# BytesIO를 사용하여 메모리 내에서 파일을 로드
+model_from_joblib = joblib.load(BytesIO(response.content))
+
+
+
 #a = pd.read_csv('./starcraft_player_data.csv')
 #print(pd.DataFrame(a))
 # def starcraft_model():
