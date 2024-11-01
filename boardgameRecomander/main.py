@@ -1,6 +1,6 @@
 import pandas as pd
 import streamlit as st
-a = pd.read_csv('/workspaces/AI/boardgameRecomander/bgg_db_1806.csv')
+a = pd.read_csv('https://raw.githubusercontent.com/oga8867/AI/boardgameReconmander/bgg_db_1806.csv')
 
 #print(pd.DataFrame(a))
 
