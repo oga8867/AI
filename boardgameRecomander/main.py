@@ -1,6 +1,16 @@
+# import pandas as pd
+# import streamlit as st
+# a = pd.read_csv('/workspaces/AI/boardgameRecomander/bgg_db_1806.csv')
+
+
 import pandas as pd
 import streamlit as st
-a = pd.read_csv('/workspaces/AI/boardgameRecomander/bgg_db_1806.csv')
+
+# GitHub raw URL로 변경
+url = 'https://raw.githubusercontent.com/oga8867/AI/main/boardgameRecomander/bgg_db_1806.csv'
+a = pd.read_csv(url)
+
+st.write(a)
 
 #print(pd.DataFrame(a))
 
