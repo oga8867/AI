@@ -1,7 +1,7 @@
 # import pandas as pd
 # import streamlit as st
 # a = pd.read_csv('/workspaces/AI/boardgameRecomander/bgg_db_1806.csv')
-
+#위는 streamlit에서 정상 작동하지 않음
 
 import pandas as pd
 import streamlit as st
@@ -10,7 +10,7 @@ import streamlit as st
 url = 'https://raw.githubusercontent.com/oga8867/AI/main/boardgameRecomander/bgg_db_1806.csv'
 a = pd.read_csv(url)
 
-st.write(a)
+
 
 #print(pd.DataFrame(a))
 
