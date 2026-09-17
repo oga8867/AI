@@ -20,18 +20,7 @@ import streamlit as st
 import joblib
 from rankshoot import rankshoots
 
-import requests
-from io import BytesIO
-
-# GitHub raw URL
-url = 'https://raw.githubusercontent.com/oga8867/AI/main/starcraftrank/starcraft.pkl'
-
-# 파일 다운로드
-response = requests.get(url)
-response.raise_for_status()  # 오류가 있을 경우 예외 발생
-
-# BytesIO를 사용하여 메모리 내에서 파일을 로드
-model_from_joblib = joblib.load(BytesIO(response.content))
+from pathlib import Path
 
 
 
@@ -125,114 +114,70 @@ model_from_joblib = joblib.load(BytesIO(response.content))
 #     joblib.dump(LR, './starcraft_logistic.pkl')
 
 
-#starcraft_model()  #위에 리니어모델 실행
-model_from_joblib = joblib.load('/app/ai/starcraftrank/starcraft.pkl')  #리니어모델 불러오기
-#print(model_from_joblib.predict(x_test)) 모델 불러와서 예측
-#model_from_joblib = pickle.load(open('./starcraft.pkl','rb'))
+BASE = Path(__file__).resolve().parent
+FEATURES = ["Age", "HoursPerWeek", "TotalHours", "APM", "SelectByHotkeys", "ActionLatency"]
+RANK_IMAGES = {1: 'bronze.png', 2: 'silver.png', 3: 'gold.png', 4: 'platinum.png',
+               5: 'diamond.png', 6: 'master.png', 7: 'GM.png'}
 
-#logistic_model()  #위에 로지스틱모델 실행
-Logimodel_from_joblib = joblib.load('/app/ai/starcraftrank/starcraft_logistic.pkl')  #로지스틱모델 불러오기
-#Logimodel_from_joblib = pickle.load(open('./starcraft_logistic.pkl','rb'))
+
+@st.cache_resource
+def load_models():
+    # 저장해 둔 모델을 먼저 쓰고, 라이브러리 버전 차이로 못 읽으면 같은 데이터로 다시 학습한다
+    try:
+        linear = joblib.load(BASE / 'starcraft.pkl')
+        logistic = joblib.load(BASE / 'starcraft_logistic.pkl')
+    except Exception:
+        df = pd.read_csv(BASE / 'starcraft_player_data.csv').replace('?', np.nan).dropna()
+        x = df[FEATURES].astype(float)
+        y = df['LeagueIndex']
+        linear = LinearRegression().fit(x, y)
+        logistic = LogisticRegression(max_iter=1000).fit(x, y)
+    return linear, logistic
+
+
+model_from_joblib, Logimodel_from_joblib = load_models()
+
+
+def rank_input(key):
+    age = float(st.number_input('pick your age', 0, 99, key=f'{key}_age'))
+    apm = float(st.number_input('apm of this game', 0, 1000, key=f'{key}_apm'))
+    wholePT = float(st.number_input('playtime of all your life', 0, 100000, key=f'{key}_whole'))
+    weekPT = float(st.number_input('playtime of this week', 0, 168, key=f'{key}_week'))
+    selectkey = float(st.number_input('how many use selectkey(단축키) of this game?', 0, 10000, key=f'{key}_select') / 88.5)
+    AL = float(st.number_input('your actionlatency(ms)', 0, 1000000, key=f'{key}_al'))
+    # 모델을 학습시킨 열 순서(FEATURES)에 맞춰 넣는다
+    return pd.DataFrame([[age, weekPT, wholePT, apm, selectkey, AL]], columns=FEATURES)
+
+
+def show_rank(model, x):
+    predict = int(round(float(np.ravel(model.predict(x))[0]), 0))
+    st.write('당신의 예측결과 : ', rankshoots(predict))
+    if predict <= 0:
+        return
+    st.image(str(BASE / 'images' / RANK_IMAGES.get(predict, 'progamer.png')))
+
 
 def linear_streamlit():
-    age = float(st.number_input('pick your age', 0, 99))
-    apm=float(st.number_input('apm of this game', 0, 1000))
-    wholePT=float(st.number_input('playtime of all your life', 0, 100000))
-    weekPT=float(st.number_input('playtime of this week', 0, 168))
-    selectkey= float(st.number_input('how many use selectkey(단축키) of this game?', 0, 10000)/88.5)
-    AL=float(st.number_input('your actionlatency(ms)', 0, 1000000))
-    enterBT = st.button('Scan!')
-    if enterBT:
-        x = pd.DataFrame([["Age", "HoursPerWeek", "TotalHours", "APM","SelectByHotkeys","ActionLatency"]])
-        x.loc[0] = [age,apm,wholePT,weekPT,selectkey,AL]
-        anw = model_from_joblib.predict(x)
-        #st.write(model_from_joblib.predict(x))  # see *
-        predict = int(round(float(anw[[0],[0]]),0))
-        st.write('당신의 예측결과 : ',rankshoots(predict))
-        if rankshoots(predict):
-            if predict <= 0:
-                images = ''
-            elif predict == 1:
-                images = '/app/ai/starcraftrank/images/bronze.png'
-                st.image(f'{images}')
-            elif predict == 2:
-                images = '/app/ai/starcraftrank/images/silver.png'
-                st.image(f'{images}')
-            elif predict == 3:
-                images = '/app/ai/starcraftrank/images/gold.png'
-                st.image(f'{images}')
-            elif predict == 4:
-                images = '/app/ai/starcraftrank/images/platinum.png'
-                st.image(f'{images}')
-            elif predict == 5:
-                images = '/app/ai/starcraftrank/images/diamond.png'
-                st.image(f'{images}')
-            elif predict == 6:
-                images = '/app/ai/starcraftrank/images/master.png'
-                st.image(f'{images}')
-            elif predict == 7:
-                images = '/app/ai/starcraftrank/images/GM.png'
-                st.image(f'{images}')
-            elif predict >= 8:
-                images = '/app/ai/starcraftrank/images/progamer.png'
-                st.image(f'{images}')
-            else:
-                st.write('무언가 오류가있습니다.')
+    x = rank_input('linear')
+    if st.button('Scan!', key='linear_scan'):
+        show_rank(model_from_joblib, x)
 
-        #round(model_from_joblib.predict(x),1)
+
 def logistic_streamlit():
-    age = float(st.number_input('pick your age', 0, 99))
-    apm = float(st.number_input('apm of this game', 0, 1000))
-    wholePT = float(st.number_input('playtime of all your life', 0, 100000))
-    weekPT = float(st.number_input('playtime of this week', 0, 168))
-    selectkey = float(st.number_input('how many use selectkey(단축키) of this game?', 0, 10000) / 88.5)
-    AL = float(st.number_input('your actionlatency(ms)', 0, 1000000))
-    enterBT = st.button('Oracle! predict my rank!')
-    if enterBT:
-        x = pd.DataFrame([["Age", "HoursPerWeek", "TotalHours", "APM", "SelectByHotkeys", "ActionLatency"]])
-        x.loc[0] = [age, apm, wholePT, weekPT, selectkey, AL]
-        anw = Logimodel_from_joblib.predict(x)
-        # st.write(model_from_joblib.predict(x))  # see *
-        predict = int(round(float(anw[[0], [0]]), 0))
-        st.write('당신의 예측결과 : ', rankshoots(predict))
-        if rankshoots(predict):
-            if predict <= 0:
-                images = ''
-            elif predict == 1:
-                images = '/app/ai/starcraftrank/images/bronze.png'
-                st.image(f'{images}')
-            elif predict == 2:
-                images = '/app/ai/starcraftrank/images/silver.png'
-                st.image(f'{images}')
-            elif predict == 3:
-                images = '/app/ai/starcraftrank/images/gold.png'
-                st.image(f'{images}')
-            elif predict == 4:
-                images = '/app/ai/starcraftrank/images/platinum.png'
-                st.image(f'{images}')
-            elif predict == 5:
-                images = '/app/ai/starcraftrank/images/diamond.png'
-                st.image(f'{images}')
-            elif predict == 6:
-                images = '/app/ai/starcraftrank/images/master.png'
-                st.image(f'{images}')
-            elif predict == 7:
-                images = '/app/ai/starcraftrank/images/GM.png'
-                st.image(f'{images}')
-            elif predict >= 8:
-                images = '/app/ai/starcraftrank/images/progamer.png'
-                st.image(f'{images}')
-            else:
-                st.write('무언가 오류가있습니다.')
+    x = rank_input('logistic')
+    if st.button('Oracle! predict my rank!', key='logistic_scan'):
+        show_rank(Logimodel_from_joblib, x)
 
-def run_home() :
+
+def run_home():
     st.subheader("predict your stacraft RANK!")
     tab1, tab2 = st.tabs(["Linear", "Logistic"])
-    tab1.write("Linear Regression")
-    tab2.write("Logistic")
-    if tab1:
+    with tab1:
+        st.write("Linear Regression")
         linear_streamlit()
-    elif tab2:
+    with tab2:
+        st.write("Logistic")
         logistic_streamlit()
-run_home()
 
+
+run_home()

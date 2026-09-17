@@ -5,10 +5,11 @@
 
 import pandas as pd
 import streamlit as st
+from pathlib import Path
 
-# GitHub raw URL로 변경
-url = 'https://raw.githubusercontent.com/oga8867/AI/main/boardgameRecomander/bgg_db_1806.csv'
-a = pd.read_csv(url)
+# 앱 파일과 같은 폴더의 데이터를 읽는다
+BASE = Path(__file__).resolve().parent
+a = pd.read_csv(BASE / 'bgg_db_1806.csv')
 
 
 
@@ -46,6 +47,7 @@ if search:
         #     b = b[b['year'] <= 2000]
     if len(name)==0:
         st.write('음... 그래도 게임이 없네요. 혹시 12명이서 600시간동안 게임을 하시려는건 아니겠죠?')
+        st.stop()
     st.write(f'당신의 추천게임은 {name[0][2]}입니다!')
 
     st.write(f'자세한 정보는 이곳을 참고하세요. -> {name[0][1]}')
